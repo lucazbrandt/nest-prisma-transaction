@@ -1,0 +1,1 @@
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d '{"name":"xyz","email":"xyz@acme.com","contacts":[{"contact":"999999999","type":"MOBILE"},{"contact":"55555555","type":"PHONE"},{"contact": "xyz@acme.com", "type":"MAIL"}]}'

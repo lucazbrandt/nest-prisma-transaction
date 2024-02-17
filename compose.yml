@@ -1,0 +1,47 @@
+services:
+  dev:
+    container_name: nest_transaction_api
+    image: nest_transaction_api-dev:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    command: npm run start:debug
+    ports:
+      - 3000:3000
+      - 9229:9229
+    networks:
+      - backend-network
+    stdin_open: true
+    tty: true
+    volumes: 
+      - ./src:/app/src
+    restart: unless-stopped
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15.2-alpine
+    container_name: postgres_kata
+    hostname: zeus-db-server
+    restart: no
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "prisma_transaction"
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  backend-network:
+    driver: bridge
