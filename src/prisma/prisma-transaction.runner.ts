@@ -5,15 +5,13 @@ import { PrismaService } from './prisma.service';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaTransactionExecutor {
+export class PrismaTransactionRunner {
   constructor(
     private readonly prismaRepository: PrismaRepository,
     private readonly prismaService: PrismaService,
   ) {}
 
-  async executeInTransaction(
-    process: Observable<Promise<any>>,
-  ): Promise<Observable<any>> {
+  async run(process: Observable<Promise<any>>): Promise<Observable<any>> {
     const result = await this.prismaService.$transaction(
       async (tx: PrismaClient) => {
         this.prismaRepository.setPrismaInTransactionInstance(tx);

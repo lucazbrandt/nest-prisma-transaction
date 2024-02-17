@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { PrismaTransactionExecutor } from './prisma-transaction.executor';
+import { PrismaTransactionRunner } from './prisma-transaction.runner';
 import { PrismaRepository } from './prisma.repository';
 import { PrismaService } from './prisma.service';
 import { TransactionalInterceptor } from './transactional.interceptor';
@@ -10,13 +10,13 @@ import { TransactionalInterceptor } from './transactional.interceptor';
     PrismaService,
     PrismaRepository,
     TransactionalInterceptor,
-    PrismaTransactionExecutor,
+    PrismaTransactionRunner,
   ],
   exports: [
     PrismaService,
     PrismaRepository,
     TransactionalInterceptor,
-    PrismaTransactionExecutor,
+    PrismaTransactionRunner,
   ],
 })
 export class PrismaModule {}

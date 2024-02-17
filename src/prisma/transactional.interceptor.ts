@@ -5,16 +5,16 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { PrismaTransactionExecutor } from './prisma-transaction.executor';
+import { PrismaTransactionRunner } from './prisma-transaction.runner';
 
 @Injectable()
 export class TransactionalInterceptor implements NestInterceptor {
-  constructor(private readonly executor: PrismaTransactionExecutor) {}
+  constructor(private readonly executor: PrismaTransactionRunner) {}
 
   intercept(
     _: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    return this.executor.executeInTransaction(next.handle());
+    return this.executor.run(next.handle());
   }
 }
